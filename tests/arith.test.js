@@ -1,6 +1,6 @@
 "use strict";
 
-const { True, False, If, Zero, Pred, Succ, IsZero, eval1, evaluate } = require('../lib/arith');
+const { True, False, If, Zero, Pred, Succ, IsZero, eval1, evaluate, isNumericVal } = require('../lib/arith');
 
 describe("eval1", () => {
     test("if true then true else false evaluates to true", () => {
@@ -43,8 +43,12 @@ describe("eval1", () => {
         expect(eval1(IsZero(Pred(Zero())))).toEqual(IsZero(Zero()));
     });
 
-    test.skip("pred succ true", () => {
+    test("pred succ true does not evaluate", () => {
         expect(() => { eval1(Pred(Succ(True()))) }).toThrow("No rule applies");
+    });
+
+    test("iszero succ true does not evaluate", () => {
+        expect(() => { eval1(IsZero(Succ(True()))) }).toThrow("No rule applies");
     });
 });
 
@@ -66,3 +70,20 @@ describe("eval", () => {
     });
 });
 
+describe("isNumericVal", () => {
+    test("is true for 0", () => {
+        expect(isNumericVal(Zero())).toBeTruthy();
+    });
+
+    test("is true for succ 0", () => {
+        expect(isNumericVal(Succ(Zero()))).toBeTruthy();
+    });
+
+    test("is false for a boolean", () => {
+        expect(isNumericVal(True())).toBeFalsy();
+    });
+
+    test("is false for succ true", () => {
+        expect(isNumericVal(Succ(True()))).toBeFalsy();
+    });
+});

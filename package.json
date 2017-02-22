@@ -1,0 +1,14 @@
+{
+  "name": "arith",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "^3.16.0",
+    "jest": "^19.0.1"
+  },
+  "scripts": {
+    "pretest": "eslint lib",
+    "test": "jest"
+  }
+}
